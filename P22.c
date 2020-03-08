@@ -14,7 +14,7 @@
 void shiftTable(char[], int[]);
 
 
-/* shift table will be used to calculate shifts for Horspool algo 
+/* shift table will be used to calculate shifts for Horspool algo
  * return table (array of integers containing shifts for each letter)
  */
 void shiftTable(char *pattern, int *table) {
@@ -25,7 +25,8 @@ void shiftTable(char *pattern, int *table) {
     for (int i = 0; i < tableSize - 1; i++) {
         table[i] = patternLen;
     }
-    for (int j = 0; j < patternLen - 2; j++) {
+
+    for (int j = 0; j <= patternLen - 2; j++) {
         table[(int)pattern[j]] = patternLen - 1 - j;
     }
 
@@ -54,7 +55,7 @@ void stringSearchHorspool(char *file) {
     strtok(pattern, "\n"); // remove newline from pattern
 
     // calculating for loop iterations
-    patternLen = strlen(pattern);  
+    patternLen = strlen(pattern);
     fileLen = strlen(file);
 
     // calculate shifts for shift table
@@ -67,19 +68,26 @@ void stringSearchHorspool(char *file) {
     i = patternLen - 1;
     while (i <= fileLen - 1) {
         numCharMatches = 0;
-        index1 = patternLen - 1 - numCharMatches;
-        index2 = i - numCharMatches;
-        while ((numCharMatches <= patternLen - 1) && (pattern[index1] == file[index2])) {
+        index1 = patternLen - 1;
+        index2 = i;
+        while ((numCharMatches < patternLen) && (pattern[index1] == file[index2])) {
             numCharMatches++;
+            index1--;
+            index2--;
         }
         // match found
         if (numCharMatches == patternLen) {
-            patternShift = i - patternLen + 1; // index of matching substring
             numStringMatches++;
+            i += patternLen;
         } else {
-            i += table[(int)file[i]];
-            break;
+            if(((int)file[index2] >= 65 && (int)file[index2] <= 90) ||
+                ((int)file[index2] >= 97 && (int)file[index2] <= 122)) {
+                i += table[(int)file[index2]];
+            } else {
+                i += patternLen;
+            }
         }
+		patternShift++;
     }
 
     // calculating runtime of search (complete!)
@@ -87,7 +95,7 @@ void stringSearchHorspool(char *file) {
     searchTime = (double)(finish - start) / CLOCKS_PER_SEC;
 
     // printing stats
-    printf("Pattern shift: %d \n", patternShift); 
+    printf("Pattern shift: %d \n", patternShift);
     printf("Number of matches found: %d\n", numStringMatches);
     printf("Run time for search: %fs\n", searchTime);
 
