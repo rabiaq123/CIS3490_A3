@@ -56,16 +56,16 @@ void merge(int arr[30000], int buffer[], int left, int middle, int right) {
 /* find anagrams using presorted array of file string signatures
  */
 void anagramSearchPresorted(char file[30000][20]) {
-    int *fileBuffer, *fileArr, bufferLen = 0, counter = 0, numPossibilities = 0;
-    int temp[20] = {0}; // for merge sort
+    int *numArr, strToInt = 0, bufferLen = 0;
+    int tempArr[20] = {0}; // for merge sort
     char userInput[20] = {'\0'};
-    int inputLen = 0, inputToInt = 0, indexCount, *inputArr; // for user input
-
+    int  *inputArr, inputToInt = 0, inputLen = 0, indexCount = 0;
+    bool isAnagram = false;
     int numAnagrams = 0;
 
     // for program execution time
-	clock_t start, finish;
-	double searchTime;
+	clock_t startSearch, finishSearch, startSort, finishSort;
+    double sortTime = 0, sortTimeInput = 0, sortTimeFile = 0, searchTime = 0;
 
     /*****FOR USER INPUT*****/
 
@@ -73,28 +73,76 @@ void anagramSearchPresorted(char file[30000][20]) {
     while (inputToInt == 0) { // error checking for invalid input format
         printf("Please enter a string:\n");
         printf("> ");
-        scanf(" %s", userInput); // assuming user input is a number
+        scanf(" %s", userInput); // input should be an int
         inputLen = strlen(userInput);
-        inputToInt = atoi(userInput); // convert user input to int
+        inputToInt = atoi(userInput);
     }
-    inputArr = malloc(sizeof(int) * inputLen);
+    
+    // store user input in int array
+    inputArr = (int *)malloc(sizeof(int) * inputLen);
     indexCount = inputLen - 1;
-
-    // storing each digit in user input into array
-    while (inputToInt > 0) { // increment until all digits have been stored in array
+    while (inputToInt > 0) {
         inputArr[indexCount--] = inputToInt % 10;
         inputToInt /= 10;
     }
 
-    // sorting user input
-    anagramMergeSort(inputArr, temp, 0, inputLen - 1); // sort chars in each string from file
+    // sorting user input and calculating sort time
+    startSort = clock();
+    anagramMergeSort(inputArr, tempArr, 0, inputLen - 1);
+    finishSort = clock();
+    sortTimeInput = (double)(finishSort - startSort) / CLOCKS_PER_SEC;
 
+    /*****FOR STRINGS IN FILE*****/
 
+    // display num anagrams found (if any)
+    printf("Anagrams found in file: \n");
 
+    for (int i = 0; i < 30000; i++) {
+        bufferLen = strlen(file[i]);
+        if (inputLen == bufferLen) { // may be anagrams
+            // store string in int array
+            numArr = (int *)malloc(sizeof(int) * bufferLen);
+            indexCount = bufferLen - 1;
+            strToInt = atoi(file[i]);
+            while (strToInt > 0) {
+                numArr[indexCount--] = strToInt % 10;
+                strToInt /= 10;
+            }
+            // sorting string from file and calculating sort time
+            memset(tempArr, 0, sizeof(tempArr)); // reset tempArr elements to 0
+            startSort = clock();
+            anagramMergeSort(numArr, tempArr, 0, bufferLen - 1);
+            finishSort = clock();
+            sortTimeFile += (double)(finishSort - startSort) / CLOCKS_PER_SEC;
+            // checking for anagram
+            startSearch = clock(); // calculating search time (start)
+            for (int j = 0; j < bufferLen; j++) {
+                if (inputArr[j] == numArr[j]) {
+                    isAnagram = true;
+                } else {
+                    isAnagram = false;
+                    break;
+                }
+            }
+            finishSearch = clock(); // calculating search time (complete!)
+            searchTime += (double)(finishSearch - startSearch) / CLOCKS_PER_SEC;
+            // anagram search successful
+            if (isAnagram == true) {
+                printf("%s\n", file[i]);
+                numAnagrams++;
+            }
+        }
+    }
 
+    sortTime = sortTimeInput + sortTimeFile;
+
+    // printing stats
+    printf("Number of anagrams found: %d\n", numAnagrams);
+    printf("Time taken to sort: %fs\n", sortTime);
+    printf("Time taken to search: %fs\n", searchTime);
 
     free(inputArr);
-    free(fileArr);
+    free(numArr);
     inputArr = NULL;
-    fileArr = NULL;
+    numArr = NULL;
 }
