@@ -5,14 +5,13 @@
 #include <time.h>
 #include <stdbool.h>
 
-// function prototype
+// function prototypes
 void merge(int[], int[], int, int, int);
 void anagramMergeSort(int[], int[], int, int);
 
 
 /* split input array into smaller subarrays
- * input array can be array of strings in file OR array of characters in each string in file
-  * returns sorted integer
+ * input array will be array of integers
  */
 void anagramMergeSort(int arr[], int buffer[], int left, int right) {
     int mid;
@@ -23,6 +22,8 @@ void anagramMergeSort(int arr[], int buffer[], int left, int right) {
         anagramMergeSort(arr, buffer, mid + 1, right);
         merge(arr, buffer, left, mid + 1, right);
     }
+
+    return;
 }
 
 // merge 2 subarrays into one and count num additional inversions while merging
@@ -51,6 +52,8 @@ void merge(int arr[30000], int buffer[], int left, int middle, int right) {
     for (i = left; i <= right; i++) {
         arr[i] = buffer[i];
     }
+
+    return;
 }
 
 /* find anagrams using presorted array of file string signatures
@@ -70,7 +73,7 @@ void anagramSearchPresorted(char file[30000][20]) {
     /*****FOR USER INPUT*****/
 
     // obtain user input
-    while (inputToInt == 0) { // error checking for invalid input format
+    while (inputToInt == 0 || inputLen < 9) { // error checking for invalid input format
         printf("Please enter a string:\n");
         printf("> ");
         scanf(" %s", userInput); // input should be an int
@@ -145,4 +148,6 @@ void anagramSearchPresorted(char file[30000][20]) {
     free(numArr);
     inputArr = NULL;
     numArr = NULL;
+
+    return;
 }
