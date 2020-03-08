@@ -131,8 +131,10 @@ void anagramSearchPresorted(char file[30000][20]) {
             searchTime += (double)(finishSearch - startSearch) / CLOCKS_PER_SEC;
             // anagram search successful
             if (isAnagram == true) {
-                printf("%s\n", file[i]);
-                numAnagrams++;
+                if (strcmp(userInput, file[i]) != 0) { // do not print same string
+                    printf("%s\n", file[i]);
+                    numAnagrams++;
+                }
             }
         }
     }

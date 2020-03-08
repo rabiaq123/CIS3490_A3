@@ -17,7 +17,7 @@
  */
 void anagramSearchBruteForce(char file[30000][20]) {
     char userInput[20] = {'\0'}, fileBuffer[30000][20] = {'\0'};
-    int inputLen = 0, bufferLen[30000] = {0}; // store strlen in vars to avoid repeated calculation
+    int inputLen = 0, bufferLen = 0; // store strlen in vars to avoid repetitive calculations
     bool isAnagram = false;
     int numAnagrams = 0;
 
@@ -39,31 +39,33 @@ void anagramSearchBruteForce(char file[30000][20]) {
 
     // iterate through every string in file
     for (int i = 0; i < 30000; i++) {
-        bufferLen[i] = strlen(file[i]); 
+        bufferLen = strlen(file[i]);
         strcpy(fileBuffer[i], file[i]); // store strings from file into temp array
         // searching for anagrams
-        if (inputLen == bufferLen[i]) { // string length must be the same to be an anagram
+        if (inputLen == bufferLen) { // string length must be the same to be an anagram
             // iterate through every char in user input
             for (int j = 0; j < inputLen; j++) {
                 isAnagram = false; // reset to FALSE; remains TRUE when anagram is found in file
                 // iterate through every char in buffer from file
-                for (int k = 0; k < bufferLen[i]; k++) { 
+                for (int k = 0; k < bufferLen; k++) { 
                     // search for each successive letter of the user input in the fileBuffer[i]
-                    if (userInput[j] == fileBuffer[i][k]) { 
+                    if (userInput[j] == fileBuffer[i][k]) {
                         fileBuffer[i][k] = '*'; // remove 1st occurrence of letter found in fileBuffer[i]
                         isAnagram = true;
                         break;
                     }
                 }
-                // anagram search unsuccessful; matching char not found in fileBuffer[i]
+                // anagram search unsuccessful; userInput[j] not found in fileBuffer[i]
                 if (isAnagram == false) {
                     break;
                 }
             }
             // anagram search successful; incremented to last char of user input and fileBuffer[i]
             if (isAnagram == true) {
-                printf("%s\n", file[i]);
-                numAnagrams++;
+                if (strcmp(userInput, file[i]) != 0) { // do not print same string
+                    printf("%s\n", file[i]);
+                    numAnagrams++;
+                }
             }
         }
     }
