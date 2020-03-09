@@ -15,7 +15,7 @@ void shiftTable(char[], int[]);
 
 
 /* shift table will be used to calculate shifts for Horspool algo
- * return table (array of integers containing shifts for each letter)
+ * parameter includes pointer to table (array of integers containing shifts for each letter)
  */
 void shiftTable(char *pattern, int *table) {
     int tableSize = 128;
@@ -80,6 +80,7 @@ void stringSearchHorspool(char *file) {
             numStringMatches++;
             i += patternLen;
         } else {
+            // checking for non-ASCII values
             if(((int)file[index2] >= 65 && (int)file[index2] <= 90) ||
                 ((int)file[index2] >= 97 && (int)file[index2] <= 122)) {
                 i += table[(int)file[index2]];
