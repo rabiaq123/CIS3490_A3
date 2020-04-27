@@ -62,18 +62,23 @@ int main() {
             printf("Exiting program.\n");
         } else if (userInput == 1) {    // 1. Brute Force Anagram Search (Q1.1)
             printf("QUESTION 1.1 - Brute Force Anagram Search\n");
+            printf("Searching for anagrams of integer in file...\n");
             anagramSearchBruteForce(file1);
         } else if (userInput == 2) {    // 2. Presorted Anagram Search (Q1.2)
             printf("QUESTION 1.2 - Presorted Anagram Search\n");
+            printf("Searching for anagrams of integer in file...\n");
             anagramSearchPresorted(file1);
         } else if  (userInput == 3) {    // 3. Brute Force String Search (Q2.1)
             printf("QUESTION 2.1 - Brute Force String Search\n");
+            printf("Searching for user input in file...\n");
             stringSearchBruteForce(file2);
         } else if  (userInput == 4) {    // 4. Horspool String Search (Q2.2)
             printf("QUESTION 2.2 - Horspool String Search\n");
+            printf("Searching for user input in file...\n");
             stringSearchHorspool(file2);
         } else if  (userInput == 5) {    // 5. Boyer-Moore String Search (Q1.2)
             printf("QUESTION 2.3 - Boyer-Moore String Search\n");
+            printf("Searching for user input in file...\n");
             stringSearchBoyer(file2);
         } else {
             printf("Error: Please select one of the given options.\n");
