@@ -1,6 +1,8 @@
 FULL NAME: Rabia Qureshi
 STUDENT ID: 1046427
-ASSIGNMENT 3
+
+CIS3490 (The Analysis and Design of Computer Algorithms) Assignment 3
+String and Anagram Search Program
 
 to compile program and link object files:
 TYPE make
@@ -28,7 +30,7 @@ Q2.4: analyzing performance of brute-force and Horspool algorithms:
                                                                                 ---------------------------------
 Summary:
 Given the following results, it is safe to conclude that the Horspool algorithm was a more efficient algorithm
-for string search. The averge Horspool:Brute-Force performance ratio for the number of shifts is much less than 1, 
+for string search. The average Horspool:Brute-Force performance ratio for the number of shifts is much less than 1, 
 indicating that the Horspool algorithm had a more efficient method for shifting the pattern to be searched 
 for in the file. The average Horspool:Brute-Force performance ratio for the program runtime is also less than 1,
 suggesting that the Horspool algorithm generally ran faster than the Brute-force one.
