@@ -1,8 +1,8 @@
-FULL NAME: Rabia Qureshi
-STUDENT ID: 1046427
-
 CIS3490 (The Analysis and Design of Computer Algorithms) Assignment 3
 String and Anagram Search Program
+
+FULL NAME: Rabia Qureshi
+STUDENT ID: 1046427
 
 to compile program and link object files:
 TYPE make
